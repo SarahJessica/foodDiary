@@ -1,5 +1,5 @@
 doctype html
-html(lang='en', ng-app='poseidon')
+html(lang='en', ng-app='food-diary')
   head
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
@@ -9,12 +9,82 @@ html(lang='en', ng-app='poseidon')
     link(rel='stylesheet', href='/vendor/font-awesome/css/font-awesome.min.css')
     link(rel='stylesheet', href=isProd ? '/index.min.css' : '/index.css')
     link(rel='shortcut icon', href='/favicon.ico')
-  body
+  body(ng-controller='master')
     .container-fluid
       .row
         .col-xs-12
-          h1 Poseidon
-
+          h1 Food Diary
+          button.btn.btn-primary(ng-click='showUserForm()') show form
+      #userForm(ng-show='isUserFormShown')
+        form.form-group
+          .row
+            .col-sm-3
+              label name
+              input(ng-model='user.name' type='text')
+            .col-sm-3
+              label age
+              input(ng-model='user.age' type='number')
+            .col-sm-3
+              label gender
+              select(ng-model='user.gender' label='gender')
+                option(label='male' value='male')
+                option(label='female' value='female')
+            .col-sm-3
+            
+              button.btn.btn-primary(ng-click='setUser()' label='set') set
+        .row
+          .col-sm-3
+            label height
+            input(ng-model='user.height' type='number')
+          .col-sm-3
+            label weight
+            input(ng-model='user.weight' type='number')
+          .col-sm-3
+            label preferred units
+            select(ng-model='user.prefUnits')
+              option(value = 'imperial') imperial
+              option(value = 'metric') metric
+          .col-sm-3
+            button.btn.btn-primary(ng-click='calculateBMI()' label='BMI') BMI
+      .row
+        .col-sm-3
+          h3 name: {{user.name}}
+          h3 age: {{user.age}}
+          h4 gender: {{user.gender}}
+        .col-sm-3
+          h4 BMI {{user.BMI}}
+        .col-sm-3
+          button.btn.btn-primary(ng-click='addFood()') Add food
+      .row
+        .form-group
+          .col-sm-3
+            label food
+            input(ng-model='food.description' type='text')
+          .col-sm-3
+            label meal
+            select(ng-model='food.meal')
+              option breakfast
+              option lunch
+              option dinner
+              option snack
+          .col-sm-3
+            label calories
+            input(ng-model='food.cals' type='number')
+          .col-sm-3
+            label servings
+            input(ng-model='food.servings' type='number')
+      .row
+        table.table
+          thead
+            tr
+              th Description
+              th Meal
+              th Calories
+              th Servings
+          tbody
+            tr
+              
+            
     script(src='/vendor/jquery/dist/jquery.min.js')
     script(src='/vendor/bootstrap/dist/js/bootstrap.min.js')
     script(src='/vendor/lodash/lodash.min.js')
